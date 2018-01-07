@@ -29,7 +29,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
 
-@Theme("dark")
+//@Theme("dark")
 @SpringUI(path = "")
 @PreserveOnRefresh
 public class MainUI extends UI {
