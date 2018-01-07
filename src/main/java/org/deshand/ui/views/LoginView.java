@@ -76,7 +76,8 @@ public class LoginView extends AbstractView implements Button.ClickListener {
 		// else {
 		// if (nameTF.isEmpty()) {
 		// nameTF.set
-		// nameTF.setRequiredError("Please enter your username");
+//		 nameTF.setRequiredError("Please enter your username");
+//		nameTF.req
 		// }
 		// if (passwordTF.isEmpty()) {
 		// // passwordTF.setRequiredError("Please enter your password");

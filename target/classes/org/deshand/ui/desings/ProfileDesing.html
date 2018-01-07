@@ -10,21 +10,21 @@
  <body>
   <vaadin-vertical-layout size-full>
    <vaadin-horizontal-layout width-full margin :center>
-    <vaadin-date-time-field :middle></vaadin-date-time-field>
-    <vaadin-image></vaadin-image>
+    <vaadin-inline-date-time-field _id="inlineDateTimeField"></vaadin-inline-date-time-field>
+    <vaadin-date-time-field _id="dateTimeField" :middle></vaadin-date-time-field>
+    <vaadin-image _id="image"></vaadin-image>
    </vaadin-horizontal-layout>
-   <vaadin-horizontal-layout caption="Role" width-full :center>
-    <vaadin-label caption="Name" plain-text>
-      Label 
+   <vaadin-horizontal-layout width-full margin :center>
+    <vaadin-label caption="Name" plain-text _id="name">
+      ... 
     </vaadin-label>
-    <vaadin-label caption="Role" plain-text>
-      Label 
+    <vaadin-label caption="Role" plain-text _id="role">
+      ... 
     </vaadin-label>
    </vaadin-horizontal-layout>
-   <vaadin-horizontal-layout>
+   <vaadin-horizontal-layout margin>
     <org_deshand_ui_components-go-to-main-view-link></org_deshand_ui_components-go-to-main-view-link>
     <org_deshand_ui_components-logout-link></org_deshand_ui_components-logout-link>
-    <org_deshand_ui_views-error-view></org_deshand_ui_views-error-view>
    </vaadin-horizontal-layout>
   </vaadin-vertical-layout>
  </body>
