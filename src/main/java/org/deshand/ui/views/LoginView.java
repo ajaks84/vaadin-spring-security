@@ -37,11 +37,11 @@ public class LoginView extends AbstractView implements Button.ClickListener {
 		addComponent(new Label("Please enter your credentials:"));
 		nameTF = new TextField();
 		nameTF.setRequiredIndicatorVisible(true);
-//		 nameTF.setRequired(true);
+		nameTF.setValue("user");
 		nameTF.focus();
 
 		passwordTF = new PasswordField();
-		// passwordTF.setRequired(true);
+		passwordTF.setRequiredIndicatorVisible(true);
 
 		addComponent(nameTF);
 		addComponent(passwordTF);
@@ -62,7 +62,7 @@ public class LoginView extends AbstractView implements Button.ClickListener {
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-//		 if (nameTF.is && passwordTF.isValid()) {}
+		// if (nameTF.is && passwordTF.isValid()) {}
 		if (true) {
 			Authentication authentication = new UsernamePasswordAuthenticationToken(nameTF.getValue(),
 					passwordTF.getValue());
@@ -72,16 +72,16 @@ public class LoginView extends AbstractView implements Button.ClickListener {
 			} else {
 				passwordTF.setValue("");
 			}
-		} 
-//		else {
-//			if (nameTF.isEmpty()) {
-//				nameTF.set
-//				 nameTF.setRequiredError("Please enter your username");
-//			}
-//			if (passwordTF.isEmpty()) {
-//				// passwordTF.setRequiredError("Please enter your password");
-//			}
-//		}
+		}
+		// else {
+		// if (nameTF.isEmpty()) {
+		// nameTF.set
+		// nameTF.setRequiredError("Please enter your username");
+		// }
+		// if (passwordTF.isEmpty()) {
+		// // passwordTF.setRequiredError("Please enter your password");
+		// }
+		// }
 	}
 
 	public static String loginPathForRequestedView(String requestedViewName) {
