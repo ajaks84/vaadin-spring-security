@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="design-properties" content="{&quot;RULERS_VISIBLE&quot;:true,&quot;GUIDELINES_VISIBLE&quot;:false,&quot;SNAP_TO_OBJECTS&quot;:true,&quot;SNAP_TO_GRID&quot;:true,&quot;SNAPPING_DISTANCE&quot;:10,&quot;GENERATE_GETTERS&quot;:false,&quot;JAVA_SOURCES_ROOT&quot;:&quot;src/main/java&quot;,&quot;THEME&quot;:&quot;dark&quot;}">
+  <meta name="vaadin-version" content="8.0.5">
+  <meta name="package-mapping" content="org_deshand_ui_views:org.deshand.ui.views">
+  <meta name="package-mapping" content="org_deshand_ui_components:org.deshand.ui.components">
+ </head>
+ <body>
+  <vaadin-vertical-layout size-full>
+   <vaadin-horizontal-layout width-full margin :center>
+    <vaadin-date-time-field :middle></vaadin-date-time-field>
+    <vaadin-image></vaadin-image>
+   </vaadin-horizontal-layout>
+   <vaadin-horizontal-layout caption="Role" width-full :center>
+    <vaadin-label caption="Name" plain-text>
+      Label 
+    </vaadin-label>
+    <vaadin-label caption="Role" plain-text>
+      Label 
+    </vaadin-label>
+   </vaadin-horizontal-layout>
+   <vaadin-horizontal-layout>
+    <org_deshand_ui_components-go-to-main-view-link></org_deshand_ui_components-go-to-main-view-link>
+    <org_deshand_ui_components-logout-link></org_deshand_ui_components-logout-link>
+    <org_deshand_ui_views-error-view></org_deshand_ui_views-error-view>
+   </vaadin-horizontal-layout>
+  </vaadin-vertical-layout>
+ </body>
+</html>

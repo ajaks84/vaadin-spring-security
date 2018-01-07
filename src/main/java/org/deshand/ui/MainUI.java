@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.PreserveOnRefresh;
-import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -29,7 +28,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
 
-@Theme("dark")
+//@Theme("dark")
 @SpringUI(path = "")
 @PreserveOnRefresh
 public class MainUI extends UI {

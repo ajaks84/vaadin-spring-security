@@ -25,4 +25,4 @@ public class Application {
 // https://ralf.schaeftlein.com/2015/03/26/using-vaadin-ui-with-spring-boot-for-spring-data-backend-based-on-mongodb/
 // https://github.com/marcushellberg/spring-boot-todo
 // https://github.com/vaadin/spring
-// test string
+// comment
