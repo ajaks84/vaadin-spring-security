@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: central-warehouse-project
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: User
+Built-By: deshand
 Implementation-Vendor-Id: org.deshand
-Build-Jdk: 1.8.0_152
+Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/central-ware
  house-project/
 Created-By: Maven Integration for Eclipse

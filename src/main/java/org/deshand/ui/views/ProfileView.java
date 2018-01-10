@@ -2,8 +2,8 @@ package org.deshand.ui.views;
 
 import org.deshand.model.User;
 import org.deshand.spring.security.UserAuthenticationService;
+import org.deshand.ui.MainUI;
 import org.deshand.ui.desings.ProfileDesing;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -19,16 +19,15 @@ public class ProfileView extends ProfileDesing implements View{
 	
 	public static final String NAME = "profile";
 	
-	@Autowired
-	private UserAuthenticationService userAuthenticationService;
-
 	public ProfileView(UserAuthenticationService userAuthenticationService) {
 		super();
 //		this.name = userAuthenticationService.loginUser(authenticationRequest)
 		
+		if (!MainUI.getCurrent().isUserAnonymous()) {
 		final User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		String username = principal.getFullName();
-		this.name.setValue(username);
+		this.name.setValue(username);}
 	}
 
 
