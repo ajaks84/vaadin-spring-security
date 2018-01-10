@@ -38,7 +38,7 @@ public class Role implements GrantedAuthority {
         this.authority = authority;
     }
 
-    @Override
+//    @Override
 //    @Column(unique = true)
     public String getAuthority() {
         return authority;

@@ -50,9 +50,10 @@ public class MainView extends AbstractView {
 		profileLink.setIcon(VaadinIcons.USER);
 		horizontalLayout.addComponent(profileLink);
 		
+		//Example of "Page not found" can be added to main view here.
 		final Link invalidLink = new Link("Go to some invalid page", new ExternalResource("#!invalid_page"));
 		invalidLink.setIcon(VaadinIcons.BOMB);
-		horizontalLayout.addComponent(invalidLink);
+//		horizontalLayout.addComponent(invalidLink);
 
 		logoutLink = new LogoutLink();
 		logoutLink.updateVisibility();
