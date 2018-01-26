@@ -1,4 +1,4 @@
-package org.deshand.app.excel;
+package org.deshand.excel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApachePOIExcelRead {
 
-	private final String FILE_NAME = "d:/Siemens/CentralWarehouse.xlsx";
+	private String FILE_NAME = "d:/Siemens/CentralWarehouse.xlsx";
 	// private final String FILE_NAME = "d:/CentralWarehouse.xlsx";
 
 	@Autowired
@@ -68,7 +68,7 @@ public class ApachePOIExcelRead {
 
 	}
 
-	public void readExcel2() {
+	public void processExcelFile() {
 		try {
 			FileInputStream file = new FileInputStream(new File(FILE_NAME));
 
@@ -138,4 +138,14 @@ public class ApachePOIExcelRead {
 		}
 		return "no data";
 	}
+
+	public void setFileName(String fileName) {
+		
+		this.FILE_NAME = fileName;
+		
+	}
+	
+	
+	
+	
 }

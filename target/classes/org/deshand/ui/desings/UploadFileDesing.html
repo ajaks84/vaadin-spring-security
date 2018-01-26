@@ -9,18 +9,10 @@
  </head>
  <body>
   <vaadin-vertical-layout size-full>
-   <vaadin-horizontal-layout width-full margin :center>
-    <vaadin-label caption="Name" plain-text _id="name">
-      ... 
-    </vaadin-label>
-    <vaadin-label caption="Role" plain-text _id="role">
-      ... 
-    </vaadin-label>
+   <vaadin-horizontal-layout width-full height="20%">
+    <vaadin-upload button-caption="Select file to upload" size-full _id="upload" :middle></vaadin-upload>
    </vaadin-horizontal-layout>
-   <vaadin-horizontal-layout>
-    <vaadin-link caption="Link" _id="link"></vaadin-link>
-   </vaadin-horizontal-layout>
-   <vaadin-horizontal-layout margin>
+   <vaadin-horizontal-layout width-full height="40%">
     <org_deshand_ui_components-go-to-main-view-link></org_deshand_ui_components-go-to-main-view-link>
     <org_deshand_ui_components-logout-link></org_deshand_ui_components-logout-link>
    </vaadin-horizontal-layout>

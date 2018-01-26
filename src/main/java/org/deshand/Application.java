@@ -1,6 +1,6 @@
 package org.deshand;
 
-import org.deshand.app.excel.ApachePOIExcelRead;
+import org.deshand.excel.ApachePOIExcelRead;
 import org.deshand.model.Role;
 import org.deshand.model.User;
 import org.deshand.repo.CentralWareHouseRepository;
@@ -31,7 +31,7 @@ public class Application {
 //	public CommandLineRunner readExcelData(CentralWareHouseRepository repository, ApachePOIExcelRead reader) {
 //		return (args) -> {
 //			// repository.deleteAll();
-//			// reader.readExcel2();
+//			 reader.readExcel2();
 //
 //		};
 //	}
