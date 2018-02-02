@@ -40,11 +40,13 @@ public class WareHouseView extends AbstractView {
 
 	public final Grid<CentralWareHouse> grid;
 
-	final TextField filterByDescription;
-
 	final TextField filterByShelf;
 
+	final TextField filterByDescription;
+
 	final TextField filterByPartNumber;
+
+	final TextField filterByWHNumber;
 
 	private final Button addNewBtn;
 
@@ -57,6 +59,7 @@ public class WareHouseView extends AbstractView {
 		this.filterByDescription = new TextField();
 		this.filterByShelf = new TextField();
 		this.filterByPartNumber = new TextField();
+		this.filterByWHNumber = new TextField();
 		this.addNewBtn = new Button("Новая запись в таблицу", VaadinIcons.PLUS);
 		this.logoutLink = new LogoutLink();
 		this.logoutLink.updateVisibility();
@@ -66,7 +69,7 @@ public class WareHouseView extends AbstractView {
 		// build layout
 		HorizontalLayout navigator = new HorizontalLayout(new GoToMainViewLink(), logoutLink);
 		HorizontalLayout actions = new HorizontalLayout(filterByShelf, filterByDescription, filterByPartNumber,
-				addNewBtn);
+				filterByWHNumber, addNewBtn);
 		HorizontalLayout editorSpace = new HorizontalLayout(editor);
 		VerticalLayout mainLayout = new VerticalLayout(navigator, actions, grid, editorSpace);
 		setContent(mainLayout);
@@ -79,10 +82,8 @@ public class WareHouseView extends AbstractView {
 		grid.getColumn("bKQuantity").setCaption("по 1С");
 		grid.getColumn("wHNumber").setCaption("Склад");
 		grid.getColumn("missingQuantity").setCaption("Недостача");
-
 		grid.getColumn("partNumber").setCaption("Номер Заказа");
 		grid.getColumn("placeOfInstallation").setCaption("Место установки").setExpandRatio(1);
-
 
 		// , "hasValueMetal" has been removed
 		grid.setColumns("shelfName", "partDescription", "partNumber", "wHNumber", "quantity", "bKQuantity",
@@ -91,6 +92,7 @@ public class WareHouseView extends AbstractView {
 		filterByShelf.setPlaceholder("Номер Полки");
 		filterByDescription.setPlaceholder("Описание");
 		filterByPartNumber.setPlaceholder("Номер Заказа");
+		filterByWHNumber.setPlaceholder("Номер по складу");
 
 		// Hook logic to components
 
@@ -103,6 +105,9 @@ public class WareHouseView extends AbstractView {
 
 		filterByPartNumber.setValueChangeMode(ValueChangeMode.LAZY);
 		filterByPartNumber.addValueChangeListener(e -> listEntries(e.getValue(), "partNumber"));
+
+		filterByWHNumber.setValueChangeMode(ValueChangeMode.LAZY);
+		filterByWHNumber.addValueChangeListener(e -> listEntries(e.getValue(), "orderNumber"));
 
 		// Connect selected Customer to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
@@ -139,16 +144,23 @@ public class WareHouseView extends AbstractView {
 		} else if (option == "shelf") {
 			filterByPartNumber.clear();
 			filterByDescription.clear();
+			filterByWHNumber.clear();
 			grid.setItems(repo.findByshelfNameLikeIgnoreCase(filterText));
 		} else if (option == "description") {
 			filterByPartNumber.clear();
 			filterByShelf.clear();
+			filterByWHNumber.clear();
 			grid.setItems(repo.findBypartDescriptionLikeIgnoreCase(filterText));
 		} else if (option == "partNumber") {
 			filterByDescription.clear();
 			filterByShelf.clear();
+			filterByWHNumber.clear();
 			grid.setItems(repo.findBypartNumberStartsWithIgnoreCase(filterText));
-
+		} else if (option == "orderNumber") {
+			filterByDescription.clear();
+			filterByShelf.clear();
+			filterByPartNumber.clear();
+			grid.setItems(repo.findBywHNumberStartsWithIgnoreCase(filterText));
 		}
 	}
 

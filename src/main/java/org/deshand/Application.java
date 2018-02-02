@@ -1,9 +1,7 @@
 package org.deshand;
 
-import org.deshand.excel.ApachePOIExcelRead;
 import org.deshand.model.Role;
 import org.deshand.model.User;
-import org.deshand.repo.CentralWareHouseRepository;
 import org.deshand.service.RoleRepository;
 import org.deshand.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SuppressWarnings("unused")
 @SpringBootApplication
@@ -18,40 +17,39 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(new Object[] { Application.class }, args);
 	}
-	
+
 	// Check findByAuthorities method
 
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
-
-//	@Bean
-//	public CommandLineRunner readExcelData(CentralWareHouseRepository repository, ApachePOIExcelRead reader) {
-//		return (args) -> {
-//			// repository.deleteAll();
-//			 reader.readExcel2();
+//	@Autowired
+//	private UserRepository userRepository;
 //
-//		};
-//	}
+//	@Autowired
+//	private RoleRepository roleRepository;
 
+	// @Bean
+	// public CommandLineRunner readExcelData(CentralWareHouseRepository repository,
+	// ApachePOIExcelRead reader) {
+	// return (args) -> {
+	// // repository.deleteAll();
+	// reader.processExcelFile();
+	// };
+	// }
+//
 //	@Bean
 //	public CommandLineRunner createUsers(UserRepository userRepository, RoleRepository roleRepository) {
 //		return (args) -> {
-//			
+//
 //			Role adminRole;
 //			Role userRole;
-//	        roleRepository.deleteAll();
-//	        System.out.println(roleRepository.findByAuthority("ADMIN"));
+//			roleRepository.deleteAll();
+//			System.out.println(roleRepository.findByAuthority("ADMIN"));
 //			if (roleRepository.count() == 0) {
 //				adminRole = new Role("ROLE_ADMIN");
 //				roleRepository.save(adminRole);
-//		        System.out.println(roleRepository.findByAuthority("ADMIN"));
+//				System.out.println(roleRepository.findByAuthority("ADMIN"));
 //				userRole = new Role("ROLE_USER");
 //				roleRepository.save(userRole);
 //			} else {
-//				System.out.println("create roles");
 //				adminRole = roleRepository.findByAuthority("ADMIN");
 //				userRole = roleRepository.findByAuthority("USER");
 //			}
@@ -67,7 +65,6 @@ public class Application {
 //	}
 //
 //	private User createUser(String username, String password, String fullname, Role... roles) {
-//		System.out.println(roles.length);
 //		User user = new User();
 //		user.setUsername(username);
 //		user.setUnencryptedPassword(password);
@@ -75,10 +72,9 @@ public class Application {
 //		for (Role role : roles) {
 //			user.addAuthority(role);
 //		}
-//		System.out.println(user.toString());
 //		return user;
 //	}
-
+//
 }
 
 // https://www.youtube.com/watch?v=qUBt8k4pQgQ&feature=youtu.be&t=581

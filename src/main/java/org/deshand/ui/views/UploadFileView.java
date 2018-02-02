@@ -1,11 +1,13 @@
 package org.deshand.ui.views;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import org.deshand.excel.ApachePOIExcelRead;
 import org.deshand.ui.desings.UploadFileDesing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.navigator.View;
@@ -25,29 +27,27 @@ import com.vaadin.ui.Upload.StartedEvent;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Window;
 
-@Secured("ROLE_ADMIN")
+//@Secured("ROLE_ADMIN")
 @SpringView(name = UploadFileView.NAME)
 public class UploadFileView extends UploadFileDesing implements View {
-	
-	@Autowired
-	private ApachePOIExcelRead reader;
 
 	public static final String NAME = "upload";
+
+	protected File tempFile;
+	@Autowired
+	private ApachePOIExcelRead reader;
 
 	private static final long serialVersionUID = -6231029225165237125L;
 
 	public UploadFileView() {
 		super();
-
-		LineBreakCounter lineBreakCounter = new LineBreakCounter();
-		lineBreakCounter.setSlow(true);
-
-		this.upload.setReceiver(lineBreakCounter);
-
+		ExcelFileProcessor excelFileProcessor = new ExcelFileProcessor();
+		excelFileProcessor.setSlow(true);
+		this.upload.setReceiver(excelFileProcessor);
 		this.upload.setImmediateMode(false);
 		this.upload.setButtonCaption("Обновить базу данных ");
 
-		UploadInfoWindow uploadInfoWindow = new UploadInfoWindow(upload, lineBreakCounter);
+		UploadInfoWindow uploadInfoWindow = new UploadInfoWindow(upload, excelFileProcessor);
 
 		this.upload.addStartedListener(event -> {
 			if (uploadInfoWindow.getParent() == null) {
@@ -56,16 +56,16 @@ public class UploadFileView extends UploadFileDesing implements View {
 			uploadInfoWindow.setClosable(false);
 		});
 		this.upload.addFinishedListener(event -> uploadInfoWindow.setClosable(true));
+		this.upload.addFinishedListener(event -> reader.processExcelFile(excelFileProcessor.getTempFile().getAbsolutePath()));
+		
 
-	}
-
-	@Override
-	public void enter(ViewChangeEvent event) {
 	}
 
 	@StyleSheet("uploadexample.css")
 	private static class UploadInfoWindow extends Window implements Upload.StartedListener, Upload.ProgressListener,
 			Upload.FailedListener, Upload.SucceededListener, Upload.FinishedListener {
+
+		private static final long serialVersionUID = 3602206942407206977L;
 		private final Label state = new Label();
 		private final Label result = new Label();
 		private final Label fileName = new Label();
@@ -73,11 +73,12 @@ public class UploadFileView extends UploadFileDesing implements View {
 
 		private final ProgressBar progressBar = new ProgressBar();
 		private final Button cancelButton;
-		private final LineBreakCounter counter;
+		private final ExcelFileProcessor processor;
 
-		private UploadInfoWindow(final Upload upload, final LineBreakCounter lineBreakCounter) {
+		private UploadInfoWindow(final Upload upload, final ExcelFileProcessor excelFileProcessor) {
 			super("Status");
-			this.counter = lineBreakCounter;
+
+			this.processor = excelFileProcessor;
 
 			addStyleName("upload-info");
 
@@ -129,6 +130,10 @@ public class UploadFileView extends UploadFileDesing implements View {
 			progressBar.setVisible(false);
 			textualProgress.setVisible(false);
 			cancelButton.setVisible(false);
+
+			// reader = new ApachePOIExcelRead();
+			// reader.setFileName(filename);
+			// reader.processExcelFile2(ExcelFileProcessor.tempFile);
 		}
 
 		@Override
@@ -150,53 +155,72 @@ public class UploadFileView extends UploadFileDesing implements View {
 			// this method gets called several times during the update
 			progressBar.setValue(readBytes / (float) contentLength);
 			textualProgress.setValue("Processed " + readBytes + " bytes of " + contentLength);
-			result.setValue(counter.getLineBreakCount() + " (counting...)");
+			result.setValue(processor.getLineBreakCount() + " (counting...)");
 		}
 
 		@Override
 		public void uploadSucceeded(final SucceededEvent event) {
-			result.setValue(counter.getLineBreakCount() + " (total)");
+			result.setValue(processor.getLineBreakCount() + " (total)");
 		}
 
 		@Override
 		public void uploadFailed(final FailedEvent event) {
-			result.setValue(counter.getLineBreakCount() + " (counting interrupted at "
+			result.setValue(processor.getLineBreakCount() + " (counting interrupted at "
 					+ Math.round(100 * progressBar.getValue()) + "%)");
 		}
 	}
 
-	private static class LineBreakCounter implements Receiver {
+	private static class ExcelFileProcessor implements Receiver {
+
+		private static final long serialVersionUID = -5905587819552974265L;
 		private int counter;
 		private int total;
 		private boolean sleep;
+		private File tempFile;
 
-		/**
-		 * return an OutputStream that simply counts lineends
-		 */
+		public File getTempFile() {
+			return tempFile;
+		}
+
 		@Override
 		public OutputStream receiveUpload(final String filename, final String MIMEType) {
-			
-			System.out.println(filename);
+			try {
+
+				tempFile = File.createTempFile("temp", ".xlsx");
+
+			} catch (Exception e) {
+				System.out.println("Cannot create file");
+			}
+
 			counter = 0;
 			total = 0;
-			return new OutputStream() {
-				private static final int searchedByte = '\n';
+			try {
+				return new FileOutputStream(tempFile);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				return null;
+			}
 
-				@Override
-				public void write(final int b) {
-					total++;
-					if (b == searchedByte) {
-						counter++;
-					}
-					if (sleep && total % 1000 == 0) {
-						try {
-							Thread.sleep(100);
-						} catch (final InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			};
+			// return new OutputStream() {
+			// private static final int searchedByte = '\n';
+			//
+			// @Override
+			// public void write(final int b) {
+			// total++;
+			// if (b == searchedByte) {
+			// counter++;
+			// }
+			// if (sleep && total % 1000 == 0) {
+			// try {
+			// Thread.sleep(100);
+			// } catch (final InterruptedException e) {
+			// e.printStackTrace();
+			// }
+			// }
+			// }
+
+			// };
+
 		}
 
 		private int getLineBreakCount() {
@@ -208,43 +232,8 @@ public class UploadFileView extends UploadFileDesing implements View {
 		}
 	}
 
-	private static class ExcelFileProcessor implements Receiver {
-		private int counter;
-		private int total;
-		private boolean sleep;
-
-		// Here I'm going to process an excel file which I didn't poses yet.
-		@Override
-		public OutputStream receiveUpload(final String filename, final String MIMEType) {
-			counter = 0;
-			total = 0;
-			return new OutputStream() {
-				private static final int searchedByte = '\n';
-
-				@Override
-				public void write(final int b) {
-					total++;
-					if (b == searchedByte) {
-						counter++;
-					}
-					if (sleep && total % 1000 == 0) {
-						try {
-							Thread.sleep(100);
-						} catch (final InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			};
-		}
-
-		private int getLineBreakCount() {
-			return counter;
-		}
-
-		private void setSlow(boolean value) {
-			sleep = value;
-		}
+	@Override
+	public void enter(ViewChangeEvent event) {
 	}
 
 }

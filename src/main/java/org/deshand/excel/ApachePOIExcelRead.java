@@ -2,15 +2,10 @@ package org.deshand.excel;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.deshand.model.CentralWareHouse;
@@ -21,64 +16,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApachePOIExcelRead {
 
-	private String FILE_NAME = "d:/Siemens/CentralWarehouse.xlsx";
-	// private final String FILE_NAME = "d:/CentralWarehouse.xlsx";
-
 	@Autowired
 	CentralWareHouseRepository repository;
 
-	@SuppressWarnings("deprecation")
-	public void readExcel() {
+	public void processExcelFile(String fileName) {
 
 		try {
-
-			FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-			Workbook workbook = new XSSFWorkbook(excelFile);
-			Sheet datatypeSheet = workbook.getSheetAt(0);
-			Iterator<Row> iterator = datatypeSheet.iterator();
-
-			while (iterator.hasNext()) {
-
-				Row currentRow = iterator.next();
-				Iterator<Cell> cellIterator = currentRow.iterator();
-
-				while (cellIterator.hasNext()) {
-
-					Cell currentCell = cellIterator.next();
-					// getCellTypeEnum shown as deprecated for version 3.15
-					// getCellTypeEnum will be renamed to getCellType starting from version 4.0
-					if (currentCell.getCellTypeEnum() == CellType.STRING) {
-						System.out.print(currentCell.getStringCellValue() + "--");
-					} else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
-						System.out.print(currentCell.getNumericCellValue() + "--");
-					} else if (currentCell.getCellTypeEnum() == CellType.BLANK) {
-						System.out.print(". . ." + "--");
-					}
-
-				}
-				System.out.println();
-
-			}
-			workbook.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void processExcelFile() {
-		try {
-			FileInputStream file = new FileInputStream(new File(FILE_NAME));
+			FileInputStream file = new FileInputStream(new File(fileName));
 
 			// Create Workbook instance holding reference to .xlsx file
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 
 			// Get first/desired sheet from the workbook
 			XSSFSheet sheet = workbook.getSheetAt(0);
-			
-//			System.out.println(sheet.getLastRowNum());
+
+			System.out.println(sheet.getLastRowNum());
 
 			// I've Header and I'm ignoring header for that I've +1 in loop
 
@@ -139,13 +91,4 @@ public class ApachePOIExcelRead {
 		return "no data";
 	}
 
-	public void setFileName(String fileName) {
-		
-		this.FILE_NAME = fileName;
-		
-	}
-	
-	
-	
-	
 }

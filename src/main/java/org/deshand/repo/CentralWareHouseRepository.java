@@ -17,6 +17,9 @@ public interface CentralWareHouseRepository extends MongoRepository<CentralWareH
 
 	Collection<CentralWareHouse> findBypartNumberStartsWithIgnoreCase(String filterText);
 	
+	Collection<CentralWareHouse> findBywHNumberStartsWithIgnoreCase(String filterText);
+
+	
 	List<CentralWareHouse> findBy(String data,Pageable pageable); 
 
 
