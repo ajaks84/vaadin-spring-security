@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import org.deshand.excel.ApachePOIExcelRead;
 import org.deshand.ui.desings.UploadFileDesing;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.navigator.View;
@@ -27,7 +28,7 @@ import com.vaadin.ui.Upload.StartedEvent;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Window;
 
-//@Secured("ROLE_ADMIN")
+@Secured("ROLE_USER")
 @SpringView(name = UploadFileView.NAME)
 public class UploadFileView extends UploadFileDesing implements View {
 
