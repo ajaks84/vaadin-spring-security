@@ -20,6 +20,8 @@ public class ApachePOIExcelRead {
 	CentralWareHouseRepository repository;
 
 	public void processExcelFile(String fileName) {
+		
+		repository.deleteAll();
 
 		try {
 			FileInputStream file = new FileInputStream(new File(fileName));

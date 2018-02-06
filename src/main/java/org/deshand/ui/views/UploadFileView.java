@@ -35,6 +35,7 @@ public class UploadFileView extends UploadFileDesing implements View {
 	public static final String NAME = "upload";
 
 	protected File tempFile;
+	
 	@Autowired
 	private ApachePOIExcelRead reader;
 
@@ -131,10 +132,6 @@ public class UploadFileView extends UploadFileDesing implements View {
 			progressBar.setVisible(false);
 			textualProgress.setVisible(false);
 			cancelButton.setVisible(false);
-
-			// reader = new ApachePOIExcelRead();
-			// reader.setFileName(filename);
-			// reader.processExcelFile2(ExcelFileProcessor.tempFile);
 		}
 
 		@Override
@@ -147,7 +144,6 @@ public class UploadFileView extends UploadFileDesing implements View {
 			// updates to client
 			state.setValue("Uploading");
 			fileName.setValue(event.getFilename());
-
 			cancelButton.setVisible(true);
 		}
 
